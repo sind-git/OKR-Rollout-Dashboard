@@ -1,0 +1,338 @@
+<div id="functiondetails">
+         <ol class="breadcrumb mb-4">
+                         <li class="breadcrumb-item active">Objective Level Summary</li>
+         </ol>
+                 <div class="row">
+                     <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                           <div class="card-body">Total OKRs</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="big text-white ">{{ datapoints.total_okrs }}</a>
+                              <div class="big text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                           <div class="card-body">OKRs checked-in </div>
+                           <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="big text-white " >{{ datapoints.okr_checkedin }}</a>
+                              <div class="big text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                           <div class="card-body">OKRs Closed</div>
+                           <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="big text-white " > {{ datapoints.okr_closed }} </a>
+                              <div class="big text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                           <div class="card-body">Avg. Progress </div>
+                           <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="big text-white">{{ datapoints.avg_progress }} %</a>
+                              <div class="big text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                   <div class = "row">
+                      <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                           <div class="card-body">OKRs with KPIs</div>
+                           <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="big text-white " > {{ datapoints.okr_with_kpi }}</a>
+                              <div class="big text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                           <div class="card-body">OKRs updated in the last 2 weeks </div>
+                           <div class="card-footer d-flex align-items-center justify-content-between">
+                              <a class="small text-white ">{{ datapoints.okr_updated_in_last_2_weeks }}</a>
+                              <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+                  <div class="row">
+                     <div class="col-xl-6">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas mr-1"></i>OKRs status</div>
+                           <div class="card-body">
+                              <canvas id="myPieChart_OKRStatus" width="100%" height="40"></canvas>
+                                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                                        <script>
+                                        var ctx = document.getElementById('myPieChart_OKRStatus');
+                                        var myPieChart_OKRStatus = new Chart(ctx, {
+                                            type: 'pie',
+                                            data: {
+                                                labels:["At Risk","Behind","Closed","Not Started","On Track","Postponed"],
+                                                datasets: [{
+                                                    data: {{ datapoints.okrstatus_data }},
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                title: {
+                                                        display: false,
+                                                        text: 'OKR by Status'
+                                                     }
+                                            }
+                                        });
+
+                                        </script>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-6">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>OKRs Progress</div>
+                           <div class="card-body">
+                            <canvas id="myBarChart_OKRProgress" width="100%" height="40"></canvas>
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                                        <script>
+                                        var ctx = document.getElementById('myBarChart_OKRProgress').getContext('2d');
+                                        var myBarChart_OKRProgress = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Over 70%','30% to 70%','Under 30%'],
+                                                datasets: [{
+                                                    data: {{ datapoints.okr_progress}},
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                legend: { display: false },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                        </script>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                   <ol class="breadcrumb mb-4">
+                     <li class="breadcrumb-item active">User Level Summary</li>
+                   </ol>
+                     <div class="row">
+                     <div class="col-xl-4">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>User status</div>
+                           <div class="card-body">
+                                <canvas id="myBarChart_UserStatus" width="100%" height="40"></canvas>
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                                        <script>
+                                        var ctx = document.getElementById('myBarChart_UserStatus').getContext('2d');
+                                        var myBarChart_UserStatus = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Active','Pending'],
+                                                datasets: [{
+                                                    data: {{ datapoints.userstatus_data}},
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                legend: { display: false },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                        </script>
+                                </div>
+                           </div>
+                     </div>
+                     <div class="col-xl-4">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>User Objectives Assignment : </div>
+                            <div class="card-body">
+                                <canvas id="myBarChart_UserObjAssignment" width="100%" height="40"></canvas>
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                                        <script>
+                                        var ctx = document.getElementById('myBarChart_UserObjAssignment').getContext('2d');
+                                        var myBarChart_UserObjAssignment = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Has Objectives','No Objectives'],
+                                                datasets: [{
+                                                    data: {{ datapoints.userobj_data }},
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                 legend: { display: false },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                        </script>
+                                </div>
+                            </div>
+                        </div>
+                      <div class="col-xl-4">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>User Checkin Rigor</div>
+                           <div class="card-body">
+                              <canvas id="myBarChart_UserCheckin" width="100%" height="40"></canvas>
+                               <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                               <script>
+                                        var ctx = document.getElementById('myBarChart_UserCheckin').getContext('2d');
+                                        var myBarChart_UserCheckin = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Has Check-ins','No Check-ins'],
+                                                datasets: [{
+                                                    data: {{ datapoints.usercheckin_data }},
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                             legend: { display: false },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                        </script>
+                           </div>
+                     </div>
+                  </div>
+                  <br>
+                     <div class="container-fluid">
+                         <div class="card mb-5">
+                     <div class="card-header">
+                         <i class="fas fa-table mr-1"></i>Quick Export
+                     </div>
+
+                         <div class="card-body">
+                        <div class="table-responsive">
+                           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Manager</th>
+                                    <th>Public Objectives</th>
+                                    <th>Objectives with check-ins</th>
+                                    <th>Average Progress (in %)</th>
+                                    <th>Last Active</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                              {% for quickExport in datapoints.quickExportDF.itertuples %}
+                                 <tr>
+                                    <td>{{ quickExport.Name }}</td>
+                                    <td>{{ quickExport.Manager_x }}</td>
+                                    <td>{{ quickExport.PublicObjectives }}</td>
+                                    <td>{{ quickExport.ObjectiveswithCheckins }}</td>
+                                    <td>{{ quickExport.AverageProgress }}</td>
+                                    <td>{{ quickExport.LastActive }}</td>
+                                 </tr>
+                              {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     </div>
+                     </div>
+          </div>

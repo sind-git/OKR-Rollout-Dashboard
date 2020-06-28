@@ -1,0 +1,61 @@
+  {%  extends "dashboard/base.html" %}
+
+  {% block functionselection %}
+            <div class="col-xl-4">
+                        <div class="card mb-4">
+                           <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Choose your Function </div>
+                           <div class="card-body">
+                               <form method="POST" id="functionForm" data-functiondetails-url="{% url 'ajax_load_functiondetails' %}" novalidate>
+                                    {% csrf_token %}
+                                <select class="selectpicker" id="functionValues">
+                                    {% for function in functions %}
+                                            <option  value="{{ function.name }}">{{ function.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                </form>
+                           </div>
+                        </div>
+            </div>
+            {% include "dashboard/functiondetails.html" %}
+
+                      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                      <script>
+                      $(function () {
+                                    $("#functionValues").on("changed.bs.select", function(e, clickedIndex, newValue, oldValue) {
+                                    var functionname = $(this).find('option').eq(clickedIndex).text();
+                                    var url = $("#functionForm").attr("data-functiondetails-url");
+                                    console.log('functionname ' + functionname + '  newValue: ' + newValue + ' oldValue: ' + oldValue + '  AjaxURL: ' + url);
+
+                                          $.ajax({                       // initialize an AJAX request
+                                                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-functiondetails/)
+                                                    data: {
+                                                      'functionname': functionname   // add the country id to the GET parameters
+                                                    },
+                                                    success: function (data) {   // `data` is the return of the `load_functiondetails` view function
+                                                      $("#functiondetails").html(data);  // replace the contents of the city input with the data that came from the server
+                                                    }
+                                                  });
+                                     console.log(data)
+                                    });
+                                });
+                   //   $("#id_functionValues").onClick(function () {
+                   //       var url = $("#functionForm").attr("data-functiondetails-url");  // get the url of the `load_functiondetails` view
+                   //       var functionNameValue = $(this).val()  // get the selected country ID from the HTML input
+
+                   //       $.ajax({                       // initialize an AJAX request
+                   //         url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-functiondetails/)
+                   //         data: {
+                   //           'functionname': "HR"       // add the country id to the GET parameters
+                   //         },
+                   //         success: function (data) {   // `data` is the return of the `load_functiondetails` view function
+                   //           $("#id_functiondetails").html(data);  // replace the contents of the city input with the data that came from the server
+                   //         }
+                   //       });
+
+                   //       console.log(url)
+                    //      console.log(data)
+                   //     console.log(functionNameValue)
+                   //     });
+                      </script>
+
+ {% endblock %}
